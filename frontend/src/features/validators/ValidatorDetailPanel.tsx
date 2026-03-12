@@ -4,6 +4,27 @@ interface ValidatorDetailPanelProps {
   validator: Validator | null;
 }
 
+function getStatusBadgeStyle(status: "online" | "offline" | "degraded") {
+  const styleMap = {
+    online: {
+      bg: "bg-emerald-500/20",
+      text: "text-emerald-300",
+      dot: "bg-emerald-500",
+    },
+    degraded: {
+      bg: "bg-amber-500/20",
+      text: "text-amber-300",
+      dot: "bg-amber-500",
+    },
+    offline: {
+      bg: "bg-red-500/20",
+      text: "text-red-300",
+      dot: "bg-red-500",
+    },
+  };
+  return styleMap[status];
+}
+
 export function ValidatorDetailPanel({ validator }: ValidatorDetailPanelProps) {
   if (!validator) {
     return (
@@ -24,9 +45,15 @@ export function ValidatorDetailPanel({ validator }: ValidatorDetailPanelProps) {
         <div>
           <h3 className="text-xs font-medium text-muted">Status</h3>
           <p className="mt-1 text-xs">
-            <span className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-[10px] uppercase tracking-wide">
-              {validator.status}
-            </span>
+            {(() => {
+              const style = getStatusBadgeStyle(validator.status);
+              return (
+                <span className={`inline-flex items-center gap-1 rounded-full ${style.bg} ${style.text} px-2 py-0.5 text-[10px] uppercase tracking-wide font-semibold`}>
+                  <span className={`inline-block h-1.5 w-1.5 rounded-full ${style.dot}`} />
+                  {validator.status}
+                </span>
+              );
+            })()}
           </p>
         </div>
 

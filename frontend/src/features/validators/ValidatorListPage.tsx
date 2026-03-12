@@ -3,6 +3,27 @@ import { fetchValidators } from "../../api";
 import type { Validator } from "../../data/types";
 import { ValidatorDetailPanel } from "./ValidatorDetailPanel";
 
+function getStatusBadgeStyle(status: "online" | "offline" | "degraded") {
+  const styleMap = {
+    online: {
+      bg: "bg-emerald-500/20",
+      text: "text-emerald-300",
+      dot: "bg-emerald-500",
+    },
+    degraded: {
+      bg: "bg-amber-500/20",
+      text: "text-amber-300",
+      dot: "bg-amber-500",
+    },
+    offline: {
+      bg: "bg-red-500/20",
+      text: "text-red-300",
+      dot: "bg-red-500",
+    },
+  };
+  return styleMap[status];
+}
+
 export function ValidatorListPage() {
   const [validators, setValidators] = useState<Validator[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -93,9 +114,15 @@ export function ValidatorListPage() {
                   >
                     <td className="px-3 py-3 text-xs font-medium">{v.name}</td>
                     <td className="px-3 py-3 text-xs">
-                      <span className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-[10px] uppercase tracking-wide">
-                        {v.status}
-                      </span>
+                      {(() => {
+                        const style = getStatusBadgeStyle(v.status);
+                        return (
+                          <span className={`inline-flex items-center gap-1 rounded-full ${style.bg} ${style.text} px-2 py-0.5 text-[10px] uppercase tracking-wide font-semibold`}>
+                            <span className={`inline-block h-1.5 w-1.5 rounded-full ${style.dot}`} />
+                            {v.status}
+                          </span>
+                        );
+                      })()}
                     </td>
                     <td className="px-3 py-3 text-xs">{v.stake}</td>
                     <td className="px-3 py-3 text-xs">{v.score}</td>
