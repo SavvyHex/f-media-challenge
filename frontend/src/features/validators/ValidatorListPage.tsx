@@ -51,7 +51,7 @@ export function ValidatorListPage() {
           <div>
             <h1 className="text-lg font-semibold">Validators</h1>
             <p className="text-sm text-muted">
-              Data from backend API. Prioritize table layout and status styling.
+              Hover on a row to view more information.
             </p>
           </div>
           <div className="flex items-center gap-2 text-xs">
@@ -87,7 +87,7 @@ export function ValidatorListPage() {
               return (
                 <tr
                   key={v.id}
-                  className="border-t border-border"
+                  className="group border-t border-border transition-colors hover:bg-muted/10"
                   aria-selected={isSelected}
                 >
                   <td className="px-3 py-2 text-xs font-medium">{v.name}</td>
@@ -105,7 +105,7 @@ export function ValidatorListPage() {
                     <button
                       type="button"
                       onClick={() => setSelectedId(v.id)}
-                      className="rounded-md bg-primary px-2 py-1 text-xs font-medium text-primaryForeground transition-colors hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      className="rounded-md border border-border/50 px-2 py-1 text-xs font-medium text-muted opacity-0 transition-all group-hover:opacity-100 group-hover:text-primaryForeground hover:bg-primary/20 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                     >
                       View
                     </button>
