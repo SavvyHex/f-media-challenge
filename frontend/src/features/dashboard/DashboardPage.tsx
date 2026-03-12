@@ -44,6 +44,53 @@ function getSeverityStyle(severity: "info" | "warning" | "error") {
   return styleMap[severity];
 }
 
+function HealthIndicator({ value }: { value: number }) {
+  const radius = 24;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (value / 100) * circumference;
+
+  return (
+    <svg
+      width="64"
+      height="64"
+      viewBox="0 0 64 64"
+      className="flex-shrink-0"
+    >
+      <circle
+        cx="32"
+        cy="32"
+        r={radius}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="4"
+        className="text-muted/20"
+      />
+      <circle
+        cx="32"
+        cy="32"
+        r={radius}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="4"
+        strokeDasharray={circumference}
+        strokeDashoffset={strokeDashoffset}
+        strokeLinecap="round"
+        className="text-emerald-500 transition-all duration-500"
+        style={{ transform: "rotate(-90deg)", transformOrigin: "32px 32px" }}
+      />
+      <text
+        x="32"
+        y="36"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        className="text-sm font-bold fill-primaryForeground"
+      >
+        {value}
+      </text>
+    </svg>
+  );
+}
+
 export function DashboardPage() {
   const [stats, setStats] = useState<DashboardStat[]>([]);
   const [events, setEvents] = useState<RecentEvent[]>([]);
@@ -133,9 +180,8 @@ export function DashboardPage() {
                       </div>
                     )}
                     {indicator === "health" && (
-                      <div className="text-[10px] font-semibold text-emerald-500 uppercase tracking-widest">
-                        {stat.value}%
-                        <div className="text-[8px] text-muted">health</div>
+                      <div className="ml-2 flex flex-col items-center justify-center">
+                        <HealthIndicator value={parseInt(stat.value)} />
                       </div>
                     )}
                   </div>
@@ -153,23 +199,27 @@ export function DashboardPage() {
             View all
           </button>
         </div>
-        <ul className="mt-3 space-y-2">
+        <ul className="mt-3 space-y-0 divide-y divide-border/40">
           {events.map((event) => {
             const severity = getSeverityStyle(event.severity);
             return (
               <li
                 key={event.id}
-                className={`flex items-center justify-between rounded-md border-l-2 border-r border-t border-b border-border ${severity.borderColor} ${severity.bgTint} px-3 py-2`}
+                className="px-4 py-4"
               >
-                <div>
-                  <div className="text-xs font-medium">{event.title}</div>
-                  <div className="text-[11px] text-muted">{event.description}</div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className={`rounded-full ${severity.badgeBg} ${severity.badgeText} px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide`}>
-                    {event.severity}
-                  </span>
-                  <span className="text-[11px] text-muted">{event.timeAgo}</span>
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <div className="text-xs font-medium">{event.title}</div>
+                    <div className="mt-1 text-[11px] text-muted">{event.description}</div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className={`flex-shrink-0 rounded-full ${severity.badgeBg} ${severity.badgeText} px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide`}>
+                      {event.severity}
+                    </span>
+                    <span className="w-16 flex-shrink-0 text-right text-[11px] text-muted">
+                      {event.timeAgo}
+                    </span>
+                  </div>
                 </div>
               </li>
             );
