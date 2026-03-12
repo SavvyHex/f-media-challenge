@@ -29,6 +29,10 @@ export function MinerListPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<"all" | "online" | "offline" | "degraded">("all");
+  const [sortBy, setSortBy] = useState<"name" | "uptime">("name");
+  const [showStatusMenu, setShowStatusMenu] = useState(false);
+  const [showSortMenu, setShowSortMenu] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -51,6 +55,23 @@ export function MinerListPage() {
   }, []);
 
   const selected = miners.find((m) => m.id === selectedId) ?? null;
+
+  // Filter miners by status
+  let filtered = miners;
+  if (statusFilter !== "all") {
+    filtered = filtered.filter((m) => m.status === statusFilter);
+  }
+
+  // Sort miners
+  if (sortBy === "uptime") {
+    filtered = [...filtered].sort((a, b) => {
+      const uptimeA = parseFloat(a.uptime);
+      const uptimeB = parseFloat(b.uptime);
+      return isNaN(uptimeB) ? -1 : isNaN(uptimeA) ? 1 : uptimeB - uptimeA;
+    });
+  } else if (sortBy === "name") {
+    filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
+  }
 
   if (loading) {
     return (
@@ -79,18 +100,86 @@ export function MinerListPage() {
             </p>
           </div>
           <div className="flex items-center gap-2 text-xs">
-            <button
-              type="button"
-              className="rounded-md border border-border bg-muted/30 px-2 py-1 text-xs font-medium transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            >
-              Status filter
-            </button>
-            <button
-              type="button"
-              className="rounded-md border border-border bg-muted/30 px-2 py-1 text-xs font-medium transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            >
-              Sort
-            </button>
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setShowStatusMenu(!showStatusMenu)}
+                className="rounded-md border border-border bg-muted/30 px-2 py-1 text-xs font-medium transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                Status: {statusFilter}
+              </button>
+              {showStatusMenu && (
+                <div className="absolute right-0 top-full mt-1 w-32 rounded-md border border-border bg-surface shadow-md z-10">
+                  <button
+                    onClick={() => {
+                      setStatusFilter("all");
+                      setShowStatusMenu(false);
+                    }}
+                    className="w-full px-3 py-2 text-left text-xs hover:bg-muted/20 transition-colors"
+                  >
+                    All statuses
+                  </button>
+                  <button
+                    onClick={() => {
+                      setStatusFilter("online");
+                      setShowStatusMenu(false);
+                    }}
+                    className="w-full px-3 py-2 text-left text-xs hover:bg-muted/20 transition-colors"
+                  >
+                    Online
+                  </button>
+                  <button
+                    onClick={() => {
+                      setStatusFilter("degraded");
+                      setShowStatusMenu(false);
+                    }}
+                    className="w-full px-3 py-2 text-left text-xs hover:bg-muted/20 transition-colors"
+                  >
+                    Degraded
+                  </button>
+                  <button
+                    onClick={() => {
+                      setStatusFilter("offline");
+                      setShowStatusMenu(false);
+                    }}
+                    className="w-full px-3 py-2 text-left text-xs hover:bg-muted/20 transition-colors"
+                  >
+                    Offline
+                  </button>
+                </div>
+              )}
+            </div>
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setShowSortMenu(!showSortMenu)}
+                className="rounded-md border border-border bg-muted/30 px-2 py-1 text-xs font-medium transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                Sort: {sortBy}
+              </button>
+              {showSortMenu && (
+                <div className="absolute right-0 top-full mt-1 w-24 rounded-md border border-border bg-surface shadow-md z-10">
+                  <button
+                    onClick={() => {
+                      setSortBy("name");
+                      setShowSortMenu(false);
+                    }}
+                    className="w-full px-3 py-2 text-left text-xs hover:bg-muted/20 transition-colors"
+                  >
+                    Name
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSortBy("uptime");
+                      setShowSortMenu(false);
+                    }}
+                    className="w-full px-3 py-2 text-left text-xs hover:bg-muted/20 transition-colors"
+                  >
+                    Uptime
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </header>
 
@@ -116,7 +205,7 @@ export function MinerListPage() {
               </tr>
             </thead>
             <tbody>
-              {miners.map((m) => {
+              {filtered.map((m) => {
                 const isSelected = m.id === selectedId;
                 return (
                   <tr
