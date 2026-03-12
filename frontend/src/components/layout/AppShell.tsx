@@ -16,7 +16,7 @@ export function AppShell({ currentView, onNavigate, children }: AppShellProps) {
       <TopNav />
       <div className="flex">
         <Sidebar currentView={currentView} onNavigate={onNavigate} />
-        <main className="flex-1">
+        <main className="flex-1 border-l border-border/30">
           {children}
         </main>
       </div>

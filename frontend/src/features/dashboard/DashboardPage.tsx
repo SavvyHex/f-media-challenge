@@ -93,8 +93,14 @@ export function DashboardPage() {
   return (
     <div className="mx-auto max-w-6xl space-y-6 px-4 py-6">
       <section>
-        <h1 className="text-lg font-semibold">Network overview</h1>
-        <p className="text-sm text-muted">
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg font-semibold">Network overview</h1>
+          <div className="flex items-center gap-1 rounded-full bg-accent/15 px-2 py-1">
+            <div className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+            <span className="text-xs font-medium text-accent">Live</span>
+          </div>
+        </div>
+        <p className="mt-1 text-sm text-muted">
           Data from backend API. Focus on layout and styling.
         </p>
         <div className="mt-4 grid gap-4 md:grid-cols-3">
