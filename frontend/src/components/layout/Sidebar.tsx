@@ -12,7 +12,7 @@ const items: { id: AppView; label: string }[] = [
 
 export function Sidebar({ currentView, onNavigate }: SidebarProps) {
   return (
-    <aside className="hidden w-56 border-r border-border md:block">
+    <aside className="hidden w-56 border-r border-border bg-gradient-to-b from-primary/5 to-background md:block">
       <nav className="space-y-1 p-3">
         {items.map((item) => {
           const isActive = currentView === item.id;
@@ -21,7 +21,7 @@ export function Sidebar({ currentView, onNavigate }: SidebarProps) {
               key={item.id}
               type="button"
               onClick={() => onNavigate(item.id)}
-              className={`flex w-full items-center justify-between rounded-md border-l-2 px-3 py-2 text-left text-sm transition-colors ${
+              className={`flex w-full items-center rounded-md border-l-2 px-3 py-2 text-left text-sm transition-colors ${
                 isActive
                   ? "border-l-primary bg-primary/10 font-semibold text-primaryForeground"
                   : "border-l-transparent hover:bg-muted/20"
@@ -29,7 +29,6 @@ export function Sidebar({ currentView, onNavigate }: SidebarProps) {
               aria-current={isActive ? "page" : undefined}
             >
               <span>{item.label}</span>
-              <span className="text-[10px] text-muted">stub</span>
             </button>
           );
         })}
