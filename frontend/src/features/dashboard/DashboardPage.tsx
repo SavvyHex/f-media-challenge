@@ -143,9 +143,6 @@ export function DashboardPage() {
             <span className="text-xs font-medium text-accent">Live</span>
           </div>
         </div>
-        <p className="mt-1 text-sm text-muted">
-          Data from backend API. Focus on layout and styling.
-        </p>
         <div className="mt-4 grid gap-4 md:grid-cols-3">
           {stats.map((stat) => {
             const { indicator, borderColor } = getStatCardStyle(stat.id);
