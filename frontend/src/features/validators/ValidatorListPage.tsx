@@ -39,12 +39,15 @@ export function ValidatorListPage() {
         if (!cancelled) setValidators(list);
       })
       .catch((err) => {
-        if (!cancelled) setError(err instanceof Error ? err.message : "Failed to load");
+        if (!cancelled)
+          setError(err instanceof Error ? err.message : "Failed to load");
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const selected = validators.find((v) => v.id === selectedId) ?? null;
@@ -95,11 +98,21 @@ export function ValidatorListPage() {
           <table className="min-w-full text-left text-sm">
             <thead>
               <tr className="bg-muted/15 border-b border-border/30">
-                <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Name</th>
-                <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Status</th>
-                <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Stake</th>
-                <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Score</th>
-                <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Last heartbeat</th>
+                <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">
+                  Name
+                </th>
+                <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">
+                  Stake
+                </th>
+                <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">
+                  Score
+                </th>
+                <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">
+                  Last heartbeat
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -109,7 +122,7 @@ export function ValidatorListPage() {
                   <tr
                     key={v.id}
                     onClick={() => setSelectedId(v.id)}
-                    className="group cursor-pointer border-t border-border/20 transition-colors hover:bg-muted/10"
+                    className={`group cursor-pointer border-t border-border/20 transition-colors hover:bg-black/5 dark:hover:bg-white/5 ${isSelected ? "bg-primary/10 dark:bg-primary/10" : ""}`}
                     aria-selected={isSelected}
                   >
                     <td className="px-3 py-3 text-xs font-medium">{v.name}</td>
@@ -117,8 +130,12 @@ export function ValidatorListPage() {
                       {(() => {
                         const style = getStatusBadgeStyle(v.status);
                         return (
-                          <span className={`inline-flex items-center gap-1 rounded-full ${style.bg} ${style.text} px-2 py-0.5 text-[10px] uppercase tracking-wide font-semibold`}>
-                            <span className={`inline-block h-1.5 w-1.5 rounded-full ${style.dot}`} />
+                          <span
+                            className={`inline-flex items-center gap-1 rounded-full ${style.bg} ${style.text} px-2 py-0.5 text-[10px] uppercase tracking-wide font-semibold`}
+                          >
+                            <span
+                              className={`inline-block h-1.5 w-1.5 rounded-full ${style.dot}`}
+                            />
                             {v.status}
                           </span>
                         );

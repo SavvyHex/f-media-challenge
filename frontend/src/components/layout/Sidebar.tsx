@@ -12,7 +12,7 @@ const items: { id: AppView; label: string }[] = [
 
 export function Sidebar({ currentView, onNavigate }: SidebarProps) {
   return (
-    <aside className="hidden w-56 border-r border-border bg-gradient-to-b from-primary/5 to-background md:block">
+    <aside className="hidden w-56 min-h-screen border-r border-border bg-gradient-to-b from-primary/5 to-background md:block">
       <nav className="space-y-1 p-3">
         {items.map((item) => {
           const isActive = currentView === item.id;
