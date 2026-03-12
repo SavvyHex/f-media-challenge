@@ -9,6 +9,7 @@ interface SidebarProps {
 const items: { id: AppView; label: string }[] = [
   { id: "dashboard", label: "Dashboard" },
   { id: "validators", label: "Validators" },
+  { id: "miners", label: "Miners" },
 ];
 
 export function Sidebar({ currentView, onNavigate, isOpen = false }: SidebarProps) {
