@@ -1,5 +1,25 @@
 import { useState, useEffect } from "react";
 
+function MenuIcon() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="text-primaryForeground"
+    >
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  );
+}
+
 function MoonIcon() {
   return (
     <svg
@@ -81,7 +101,7 @@ function ThemeToggle() {
   );
 }
 
-export function TopNav() {
+export function TopNav({ onMenuClick }: { onMenuClick?: () => void } = {}) {
   return (
     <header className="border-b border-border">
       <div className="mx-auto flex h-14 items-center justify-between px-4">
@@ -90,6 +110,14 @@ export function TopNav() {
           <span className="text-sm font-semibold">Zeus Network</span>
         </div>
         <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={onMenuClick}
+            className="md:hidden p-1 hover:bg-muted/20 rounded-md transition-colors"
+            aria-label="Toggle menu"
+          >
+            <MenuIcon />
+          </button>
           <ThemeToggle />
           <div className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-full bg-muted" />
