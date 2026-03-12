@@ -1,6 +1,28 @@
 import { useEffect, useState } from "react";
 import { fetchDashboardStats, fetchRecentEvents } from "../../api";
 import type { DashboardStat, RecentEvent } from "../../data/types";
+import { ValidatorsIcon, SessionsIcon, HealthIcon } from "../../icons";
+import type { SVGAttributes } from "react";
+
+type IconComponent = (props: SVGAttributes<SVGSVGElement>) => JSX.Element;
+
+function getStatCardStyle(statId: string) {
+  const styleMap: Record<string, { Icon: IconComponent; borderColor: string }> = {
+    "total-validators": {
+      Icon: ValidatorsIcon,
+      borderColor: "border-l-blue-500",
+    },
+    "active-sessions": {
+      Icon: SessionsIcon,
+      borderColor: "border-l-green-500",
+    },
+    "network-health": {
+      Icon: HealthIcon,
+      borderColor: "border-l-emerald-500",
+    },
+  };
+  return styleMap[statId] || { Icon: ValidatorsIcon, borderColor: "border-l-slate-500" };
+}
 
 export function DashboardPage() {
   const [stats, setStats] = useState<DashboardStat[]>([]);
@@ -52,18 +74,30 @@ export function DashboardPage() {
           Data from backend API. Focus on layout and styling.
         </p>
         <div className="mt-4 grid gap-4 md:grid-cols-3">
-          {stats.map((stat) => (
-            <article
-              key={stat.id}
-              className="rounded-md border border-border p-4"
-            >
-              <div className="text-xs text-muted">{stat.label}</div>
-              <div className="mt-2 text-2xl font-semibold">{stat.value}</div>
-              <div className="mt-1 text-xs text-muted">
-                {stat.trendLabel} {stat.trendValue}
-              </div>
-            </article>
-          ))}
+          {stats.map((stat) => {
+            const { Icon, borderColor } = getStatCardStyle(stat.id);
+            return (
+              <article
+                key={stat.id}
+                className={`rounded-md border-l-4 border-r border-t border-b border-border ${borderColor} p-4`}
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="text-xs font-medium text-muted uppercase tracking-wide">
+                      {stat.label}
+                    </div>
+                    <div className="mt-3 text-4xl font-bold">
+                      {stat.value}
+                    </div>
+                    <div className="mt-2 text-xs text-muted">
+                      {stat.trendLabel} <span className="font-medium">{stat.trendValue}</span>
+                    </div>
+                  </div>
+                  <Icon className="ml-3 h-12 w-12 flex-shrink-0 opacity-30" />
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
 
