@@ -72,7 +72,7 @@ export function ValidatorListPage() {
           <div>
             <h1 className="text-lg font-semibold">Validators</h1>
             <p className="text-sm text-muted">
-              Hover on a row to view more information.
+              Click on a row to view more information.
             </p>
           </div>
           <div className="flex items-center gap-2 text-xs">
@@ -100,7 +100,6 @@ export function ValidatorListPage() {
                 <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Stake</th>
                 <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Score</th>
                 <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Last heartbeat</th>
-                <th className="px-3 py-3" />
               </tr>
             </thead>
             <tbody>
@@ -109,7 +108,8 @@ export function ValidatorListPage() {
                 return (
                   <tr
                     key={v.id}
-                    className="group border-t border-border/20 transition-colors hover:bg-muted/10"
+                    onClick={() => setSelectedId(v.id)}
+                    className="group cursor-pointer border-t border-border/20 transition-colors hover:bg-muted/10"
                     aria-selected={isSelected}
                   >
                     <td className="px-3 py-3 text-xs font-medium">{v.name}</td>
@@ -128,15 +128,6 @@ export function ValidatorListPage() {
                     <td className="px-3 py-3 text-xs">{v.score}</td>
                     <td className="px-3 py-3 text-xs text-muted">
                       {v.lastHeartbeat}
-                    </td>
-                    <td className="px-3 py-3 text-right text-xs">
-                      <button
-                        type="button"
-                        onClick={() => setSelectedId(v.id)}
-                        className="rounded-md border border-border/50 px-2 py-1 text-xs font-medium text-muted opacity-0 transition-all group-hover:opacity-100 group-hover:text-primaryForeground hover:bg-primary/20 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                      >
-                        View
-                      </button>
                     </td>
                   </tr>
                 );
