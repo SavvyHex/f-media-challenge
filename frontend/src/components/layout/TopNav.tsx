@@ -67,11 +67,11 @@ function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="relative inline-flex h-8 w-14 items-center rounded-full bg-muted/30 transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-      aria-label="Toggle dark mode"
+      className="relative inline-flex h-8 w-14 items-center rounded-full border border-border bg-muted/30 transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      aria-label="Toggle theme"
     >
       <span
-        className={`inline-flex h-7 w-7 transform items-center justify-center rounded-full bg-background shadow-sm transition-transform ${
+        className={`inline-flex h-7 w-7 transform items-center justify-center rounded-full bg-background shadow-sm ring-2 ring-border transition-transform duration-300 ${
           isDark ? "translate-x-6" : "translate-x-0.5"
         }`}
       >
