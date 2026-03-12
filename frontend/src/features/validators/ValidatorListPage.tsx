@@ -70,51 +70,53 @@ export function ValidatorListPage() {
           </div>
         </header>
 
-        <table className="min-w-full text-left text-sm">
-          <thead>
-            <tr>
-              <th className="px-3 py-2">Name</th>
-              <th className="px-3 py-2">Status</th>
-              <th className="px-3 py-2">Stake</th>
-              <th className="px-3 py-2">Score</th>
-              <th className="px-3 py-2">Last heartbeat</th>
-              <th className="px-3 py-2" />
-            </tr>
-          </thead>
-          <tbody>
-            {validators.map((v) => {
-              const isSelected = v.id === selectedId;
-              return (
-                <tr
-                  key={v.id}
-                  className="group border-t border-border transition-colors hover:bg-muted/10"
-                  aria-selected={isSelected}
-                >
-                  <td className="px-3 py-2 text-xs font-medium">{v.name}</td>
-                  <td className="px-3 py-2 text-xs">
-                    <span className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-[10px] uppercase tracking-wide">
-                      {v.status}
-                    </span>
-                  </td>
-                  <td className="px-3 py-2 text-xs">{v.stake}</td>
-                  <td className="px-3 py-2 text-xs">{v.score}</td>
-                  <td className="px-3 py-2 text-xs text-muted">
-                    {v.lastHeartbeat}
-                  </td>
-                  <td className="px-3 py-2 text-right text-xs">
-                    <button
-                      type="button"
-                      onClick={() => setSelectedId(v.id)}
-                      className="rounded-md border border-border/50 px-2 py-1 text-xs font-medium text-muted opacity-0 transition-all group-hover:opacity-100 group-hover:text-primaryForeground hover:bg-primary/20 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                    >
-                      View
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div className="rounded-md border border-border/30 bg-surface/60 overflow-hidden">
+          <table className="min-w-full text-left text-sm">
+            <thead>
+              <tr className="bg-muted/15 border-b border-border/30">
+                <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Name</th>
+                <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Status</th>
+                <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Stake</th>
+                <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Score</th>
+                <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Last heartbeat</th>
+                <th className="px-3 py-3" />
+              </tr>
+            </thead>
+            <tbody>
+              {validators.map((v) => {
+                const isSelected = v.id === selectedId;
+                return (
+                  <tr
+                    key={v.id}
+                    className="group border-t border-border/20 transition-colors hover:bg-muted/10"
+                    aria-selected={isSelected}
+                  >
+                    <td className="px-3 py-3 text-xs font-medium">{v.name}</td>
+                    <td className="px-3 py-3 text-xs">
+                      <span className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-[10px] uppercase tracking-wide">
+                        {v.status}
+                      </span>
+                    </td>
+                    <td className="px-3 py-3 text-xs">{v.stake}</td>
+                    <td className="px-3 py-3 text-xs">{v.score}</td>
+                    <td className="px-3 py-3 text-xs text-muted">
+                      {v.lastHeartbeat}
+                    </td>
+                    <td className="px-3 py-3 text-right text-xs">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedId(v.id)}
+                        className="rounded-md border border-border/50 px-2 py-1 text-xs font-medium text-muted opacity-0 transition-all group-hover:opacity-100 group-hover:text-primaryForeground hover:bg-primary/20 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <ValidatorDetailPanel validator={selected} />
