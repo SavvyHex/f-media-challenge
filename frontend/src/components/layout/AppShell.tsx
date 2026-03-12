@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 import { TopNav } from "./TopNav";
 import { Sidebar } from "./Sidebar";
 
-export type AppView = "dashboard" | "validators";
+export type AppView = "dashboard" | "validators" | "miners";
 
 interface AppShellProps {
   currentView: AppView;

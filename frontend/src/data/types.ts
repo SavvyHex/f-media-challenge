@@ -24,3 +24,13 @@ export interface Validator {
   latency: string;
   region: string;
 }
+
+export interface Miner {
+  id: string;
+  name: string;
+  status: "online" | "offline" | "degraded";
+  hashrate: string;
+  uptime: string;
+  lastShare: string;
+  region: string;
+}
