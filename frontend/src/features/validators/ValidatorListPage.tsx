@@ -6,18 +6,18 @@ import { ValidatorDetailPanel } from "./ValidatorDetailPanel";
 function getStatusBadgeStyle(status: "online" | "offline" | "degraded") {
   const styleMap = {
     online: {
-      bg: "bg-emerald-500/20",
-      text: "text-emerald-300",
+      bg: "bg-emerald-500/40 dark:bg-emerald-500/20",
+      text: "text-emerald-900 dark:text-emerald-300",
       dot: "bg-emerald-500",
     },
     degraded: {
-      bg: "bg-amber-500/20",
-      text: "text-amber-300",
+      bg: "bg-amber-500/40 dark:bg-amber-500/20",
+      text: "text-amber-900 dark:text-amber-300",
       dot: "bg-amber-500",
     },
     offline: {
-      bg: "bg-red-500/20",
-      text: "text-red-300",
+      bg: "bg-red-500/40 dark:bg-red-500/20",
+      text: "text-red-900 dark:text-red-300",
       dot: "bg-red-500",
     },
   };
@@ -94,10 +94,10 @@ export function ValidatorListPage() {
           </div>
         </header>
 
-        <div className="rounded-md border border-border/30 bg-surface/60 overflow-hidden">
+        <div className="rounded-md border  bg-surface/60 overflow-hidden">
           <table className="min-w-full text-left text-sm">
             <thead>
-              <tr className="bg-muted/15 border-b border-border/30">
+              <tr className="bg-muted/15 border-b ">
                 <th className="px-3 py-3 text-xs font-semibold text-muted uppercase tracking-wider">
                   Name
                 </th>
@@ -122,7 +122,7 @@ export function ValidatorListPage() {
                   <tr
                     key={v.id}
                     onClick={() => setSelectedId(v.id)}
-                    className={`group cursor-pointer border-t border-border/20 transition-colors hover:bg-black/5 dark:hover:bg-white/5 ${isSelected ? "bg-primary/10 dark:bg-primary/10" : ""}`}
+                    className={`group cursor-pointer border-t  transition-colors hover:bg-black/5 dark:hover:bg-white/5 ${isSelected ? "bg-primary/10 dark:bg-primary/10" : ""}`}
                     aria-selected={isSelected}
                   >
                     <td className="px-3 py-3 text-xs font-medium">{v.name}</td>

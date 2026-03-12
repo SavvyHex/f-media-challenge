@@ -7,18 +7,18 @@ interface ValidatorDetailPanelProps {
 function getStatusBadgeStyle(status: "online" | "offline" | "degraded") {
   const styleMap = {
     online: {
-      bg: "bg-emerald-500/20",
-      text: "text-emerald-300",
+      bg: "bg-emerald-500/40 dark:bg-emerald-500/20",
+      text: "text-emerald-900 dark:text-emerald-300",
       dot: "bg-emerald-500",
     },
     degraded: {
-      bg: "bg-amber-500/20",
-      text: "text-amber-300",
+      bg: "bg-amber-500/40 dark:bg-amber-500/20",
+      text: "text-amber-900 dark:text-amber-300",
       dot: "bg-amber-500",
     },
     offline: {
-      bg: "bg-red-500/20",
-      text: "text-red-300",
+      bg: "bg-red-500/40 dark:bg-red-500/20",
+      text: "text-red-900 dark:text-red-300",
       dot: "bg-red-500",
     },
   };
