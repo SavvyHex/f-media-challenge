@@ -1,27 +1,23 @@
 import { useEffect, useState } from "react";
 import { fetchDashboardStats, fetchRecentEvents } from "../../api";
 import type { DashboardStat, RecentEvent } from "../../data/types";
-import { ValidatorsIcon, SessionsIcon, HealthIcon } from "../../icons";
-import type { SVGAttributes } from "react";
-
-type IconComponent = (props: SVGAttributes<SVGSVGElement>) => JSX.Element;
 
 function getStatCardStyle(statId: string) {
-  const styleMap: Record<string, { Icon: IconComponent; borderColor: string }> = {
+  const styleMap: Record<string, { indicator: string; borderColor: string }> = {
     "total-validators": {
-      Icon: ValidatorsIcon,
+      indicator: "nodes",
       borderColor: "border-l-blue-500",
     },
     "active-sessions": {
-      Icon: SessionsIcon,
+      indicator: "active",
       borderColor: "border-l-green-500",
     },
     "network-health": {
-      Icon: HealthIcon,
+      indicator: "health",
       borderColor: "border-l-emerald-500",
     },
   };
-  return styleMap[statId] || { Icon: ValidatorsIcon, borderColor: "border-l-slate-500" };
+  return styleMap[statId] || { indicator: "info", borderColor: "border-l-slate-500" };
 }
 
 function getSeverityStyle(severity: "info" | "warning" | "error") {
@@ -105,13 +101,13 @@ export function DashboardPage() {
         </p>
         <div className="mt-4 grid gap-4 md:grid-cols-3">
           {stats.map((stat) => {
-            const { Icon, borderColor } = getStatCardStyle(stat.id);
+            const { indicator, borderColor } = getStatCardStyle(stat.id);
             return (
               <article
                 key={stat.id}
                 className={`rounded-md border-l-4 border-r border-t border-b border-border ${borderColor} p-4`}
               >
-                <div className="flex items-start justify-between">
+                <div className="flex items-start justify-between gap-3">
                   <div className="flex-1">
                     <div className="text-xs font-medium text-muted uppercase tracking-wide">
                       {stat.label}
@@ -123,7 +119,26 @@ export function DashboardPage() {
                       {stat.trendLabel} <span className="font-medium">{stat.trendValue}</span>
                     </div>
                   </div>
-                  <Icon className="ml-3 h-12 w-12 flex-shrink-0 opacity-30" />
+                  <div className="ml-2 flex flex-shrink-0 flex-col items-end justify-start text-right">
+                    {indicator === "nodes" && (
+                      <div className="text-[10px] font-semibold text-primary uppercase tracking-widest">
+                        {Math.round(parseInt(stat.value.replace(/,/g, "")) / 1000)}k
+                        <div className="text-[8px] text-muted">nodes</div>
+                      </div>
+                    )}
+                    {indicator === "active" && (
+                      <div className="text-[10px] font-semibold text-accent uppercase tracking-widest">
+                        {stat.value.split(" ")[0]}
+                        <div className="text-[8px] text-muted">active</div>
+                      </div>
+                    )}
+                    {indicator === "health" && (
+                      <div className="text-[10px] font-semibold text-emerald-500 uppercase tracking-widest">
+                        {stat.value}%
+                        <div className="text-[8px] text-muted">health</div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </article>
             );
