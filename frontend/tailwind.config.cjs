@@ -5,15 +5,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "#050816",
-        surface: "#0B1020",
-        primary: "#2563eb",
-        primaryForeground: "#f9fafb",
-        accent: "#22c55e",
+        background: "var(--color-background)",
+        surface: "var(--color-surface)",
+        primary: "var(--color-primary)",
+        primaryForeground: "var(--color-primary-foreground)",
+        accent: "var(--color-accent)",
         danger: "#ef4444",
         warning: "#f97316",
-        muted: "#6b7280",
-        border: "#1f2933"
+        muted: "var(--color-muted)",
+        border: "var(--color-border)",
       },
       borderRadius: {
         sm: "0.25rem",
