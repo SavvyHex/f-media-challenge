@@ -1,4 +1,4 @@
-import type { DashboardStat, RecentEvent, Validator } from "./data/types";
+import type { DashboardStat, RecentEvent, Validator, Miner } from "./data/types";
 
 const API_BASE = "/api";
 
@@ -23,6 +23,18 @@ export async function fetchValidators(): Promise<Validator[]> {
 export async function fetchValidator(id: string): Promise<Validator | null> {
   try {
     return await get<Validator>(`/validators/${id}`);
+  } catch {
+    return null;
+  }
+}
+
+export async function fetchMiners(): Promise<Miner[]> {
+  return get<Miner[]>("/miners");
+}
+
+export async function fetchMiner(id: string): Promise<Miner | null> {
+  try {
+    return await get<Miner>(`/miners/${id}`);
   } catch {
     return null;
   }
