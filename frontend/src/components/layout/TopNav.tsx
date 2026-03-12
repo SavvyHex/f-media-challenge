@@ -65,22 +65,32 @@ function SunIcon() {
 }
 
 function ThemeToggle() {
-  const [isDark, setIsDark] = useState(false);
+  const [isLight, setIsLight] = useState(false);
 
   useEffect(() => {
-    // Check if dark mode is already enabled
-    const dark = document.documentElement.classList.contains("dark");
-    setIsDark(dark);
+    // Check localStorage first, then fall back to detecting current theme
+    const saved = localStorage.getItem("theme");
+    if (saved === "light") {
+      setIsLight(true);
+    } else if (saved === "dark") {
+      setIsLight(false);
+    } else {
+      // Detect current theme from document
+      const light = document.documentElement.classList.contains("light");
+      setIsLight(light);
+    }
   }, []);
 
   const toggleTheme = () => {
     const html = document.documentElement;
-    if (isDark) {
-      html.classList.remove("dark");
-      setIsDark(false);
+    if (isLight) {
+      html.classList.remove("light");
+      localStorage.setItem("theme", "dark");
+      setIsLight(false);
     } else {
-      html.classList.add("dark");
-      setIsDark(true);
+      html.classList.add("light");
+      localStorage.setItem("theme", "light");
+      setIsLight(true);
     }
   };
 
@@ -92,10 +102,10 @@ function ThemeToggle() {
     >
       <span
         className={`inline-flex h-7 w-7 transform items-center justify-center rounded-full bg-background shadow-sm ring-2 ring-border transition-transform duration-300 ${
-          isDark ? "translate-x-6" : "translate-x-0.5"
+          isLight ? "translate-x-6" : "translate-x-0.5"
         }`}
       >
-        {isDark ? <MoonIcon /> : <SunIcon />}
+        {isLight ? <SunIcon /> : <MoonIcon />}
       </span>
     </button>
   );
