@@ -2,19 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Light theme (default) */
+/* Dark theme (default) */
 :root {
-  --color-background: #F5F2EB;
-  --color-surface: #EDEAE0;
-  --color-primary: #1D4ED8;
-  --color-primary-foreground: #0F0F0F;
-  --color-accent: #15803D;
-  --color-muted: #8B8680;
-  --color-border: #D4CFC4;
-}
-
-/* Dark theme */
-:root.dark {
   --color-background: #050816;
   --color-surface: #0B1020;
   --color-primary: #2563eb;
@@ -22,6 +11,17 @@
   --color-accent: #22c55e;
   --color-muted: #6b7280;
   --color-border: #1f2933;
+}
+
+/* Light theme */
+:root.light {
+  --color-background: #F5F2EB;
+  --color-surface: #EDEAE0;
+  --color-primary: #1D4ED8;
+  --color-primary-foreground: #0F0F0F;
+  --color-accent: #15803D;
+  --color-muted: #8B8680;
+  --color-border: #D4CFC4;
 }
 
 /* You may add small global resets or layout helpers here if needed. */
